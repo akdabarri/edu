@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dewantara Edu - Rekapitulasi Akademik Medis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fef3e2 0%, #fff8f0 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            padding: 1.5rem 2rem;
+            box-shadow: 0 4px 25px rgba(220, 38, 38, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M20,20 L25,15 L30,20 L25,25 Z" fill="rgba(255,255,255,0.1)"/><circle cx="70" cy="30" r="3" fill="rgba(255,255,255,0.1)"/><rect x="15" y="70" width="6" height="6" fill="rgba(255,255,255,0.1)"/></svg>');
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: #dc2626;
+            box-shadow: 0 6px 20px rgba(251, 191, 36, 0.4);
+            animation: pulse 3s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        .logo-text h1 {
+            color: white;
+            font-size: 32px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 0.2rem;
+        }
+
+        .logo-text p {
+            color: #fbbf24;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .user-info {
+            text-align: right;
+            color: white;
+        }
+
+        .user-name {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .user-id {
+            font-size: 14px;
+            color: #fbbf24;
+            font-weight: 500;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .summary-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border: 3px solid #fee2e2;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .summary-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #dc2626 0%, #fbbf24 50%, #dc2626 100%);
+        }
+
+        .summary-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #dc2626;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-value {
+            font-size: 32px;
+            font-weight: 800;
+            color: #fbbf24;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-subtitle {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 4px solid #fee2e2;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+        }
+
+        .tab {
+            padding: 1rem 2rem;
+            background: white;
+            border: 2px solid #fee2e2;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            min-width: fit-content;
+            white-space: nowrap;
+        }
+
+        .tab:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            color: white;
+            border-color: #dc2626;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(220, 38, 38, 0.3);
+        }
+
+        .content-section {
+            background: white;
+            border-radius: 25px;
+            padding: 2.5rem;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            border: 3px solid #fee2e2;
+            position: relative;
+        }
+
+        .content-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #dc2626 0%, #fbbf24 30%, #dc2626 70%, #fbbf24 100%);
+            border-radius: 25px 25px 0 0;
+        }
+
+        .section-title {
+            color: #dc2626;
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .education-level {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            border-left: 6px solid #fbbf24;
+            position: relative;
+        }
+
+        .level-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .level-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #dc2626;
+        }
+
+        .level-years {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            color: #7c2d12;
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .school-info {
+            background: #fef3e2;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #dc2626;
+        }
+
+        .school-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: #dc2626;
+            margin-bottom: 0.5rem;
+        }
+
+        .school-details {
+            color: #6b7280;
+            font-size: 15px;
+        }
+
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .subject-category {
+            background: #f9fafb;
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 2px solid #fee2e2;
+        }
+
+        .category-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #dc2626;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .subject-list {
+            display: grid;
+            gap: 0.8rem;
+        }
+
+        .subject-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem;
+            background: white;
+            border-radius: 10px;
+            border-left: 3px solid #fbbf24;
+            transition: all 0.2s ease;
+        }
+
+        .subject-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .subject-name {
+            font-weight: 600;
+            color: #374151;
+            font-size: 14px;
+        }
+
+        .subject-grade {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .achievements-section {
+            background: linear-gradient(135deg, #fef3e2 0%, #fff8f0 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 2px solid #fbbf24;
+        }
+
+        .achievements-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #dc2626;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .achievement-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .achievement-item {
+            background: white;
+            padding: 1.2rem;
+            border-radius: 12px;
+            border-left: 4px solid #dc2626;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .achievement-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .achievement-title {
+            font-weight: 700;
+            color: #dc2626;
+            margin-bottom: 0.3rem;
+        }
+
+        .achievement-detail {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .certifications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .certification-card {
+            background: white;
+            border-radius: 18px;
+            padding: 2rem;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            border: 2px solid #fee2e2;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .certification-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #dc2626 0%, #fbbf24 100%);
+            border-radius: 18px 18px 0 0;
+        }
+
+        .certification-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .cert-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .cert-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+
+        .cert-year {
+            background: #dc2626;
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .cert-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #dc2626;
+            margin-bottom: 0.5rem;
+        }
+
+        .cert-issuer {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 1rem;
+        }
+
+        .cert-details {
+            background: #fef3e2;
+            padding: 1rem;
+            border-radius: 10px;
+            font-size: 14px;
+            color: #374151;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .gpa-section {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .gpa-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .gpa-value {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .gpa-scale {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .level-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .subjects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs {
+                flex-wrap: wrap;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">🎓</div>
+                <div class="logo-text">
+                    <h1>Dewantara Edu</h1>
+                    <p>Medical Academic Recap System</p>
+                </div>
+            </div>
+            <div class="user-info">
+                <div class="user-name">Dr. Sari Medika</div>
+                <div class="user-id">ID: MED-2024-001</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="summary-cards">
+            <div class="summary-card">
+                <div class="card-icon">📚</div>
+                <div class="card-title">Total Mata Pelajaran</div>
+                <div class="card-value">156</div>
+                <div class="card-subtitle">SD hingga Perguruan Tinggi</div>
+            </div>
+            <div class="summary-card">
+                <div class="card-icon">🏆</div>
+                <div class="card-title">Total Prestasi</div>
+                <div class="card-value">23</div>
+                <div class="card-subtitle">Juara & Penghargaan</div>
+            </div>
+            <div class="summary-card">
+                <div class="card-icon">📜</div>
+                <div class="card-title">Sertifikasi</div>
+                <div class="card-value">15</div>
+                <div class="card-subtitle">Profesional & Akademik</div>
+            </div>
+            <div class="summary-card">
+                <div class="card-icon">⭐</div>
+                <div class="card-title">IPK Tertinggi</div>
+                <div class="card-value">3.92</div>
+                <div class="card-subtitle">Summa Cum Laude</div>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('elementary')">🎒 Sekolah Dasar</button>
+            <button class="tab" onclick="showTab('junior')">📖 SMP</button>
+            <button class="tab" onclick="showTab('senior')">🎓 SMA</button>
+            <button class="tab" onclick="showTab('bachelor')">🏥 S1 Kedokteran</button>
+            <button class="tab" onclick="showTab('master')">🔬 S2 Spesialis</button>
+            <button class="tab" onclick="showTab('certifications')">📜 Sertifikasi</button>
+        </div>
+
+        <!-- SEKOLAH DASAR -->
+        <div id="elementary" class="content-section">
+            <h2 class="section-title">🎒 Pendidikan Sekolah Dasar</h2>
+            
+            <div class="education-level">
+                <div class="level-header">
+                    <div class="level-title">SD Negeri 1 IKN</div>
+                    <div class="level-years">2005 - 2011</div>
+                </div>
+
+                <div class="school-info">
+                    <div class="school-name">SD Negeri 1 IKN</div>
+                    <div class="school-details">
+                        <strong>Alamat:</strong> Jl. Pemuda No. 15, IKN<br>
+                        <strong>Akreditasi:</strong> A<br>
+                        <strong>Rata-rata Nilai:</strong> 9.2/10
+                    </div>
+                </div>
+
+                <div class="subjects-grid">
+                    <div class="subject-category">
+                        <div class="category-title">📝 Mata Pelajaran Utama</div>
+                        <div class="subject-list">
+                            <div class="subject-item">
+                                <div class="subject-name">Bahasa Indonesia</div>
+                                <div class="subject-grade">9.5</div>
+                            </div>
+                            <div class="subject-item">
+                                <div class="subject-name">Matematika</div>
+                                <div class="subject-grade">9.8</div>
+                            </div>
+                            <div class="subject-item">
+                                <div class="subject-name">IPA</div>
+                                <div class="subject-grade">9.6</div>
+                            </div>
+                            <div class="subject-item">
+                                <div class="subject-name">IPS</div>
+                                <div class="subject-grade">9.3</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="subject-category">
+                        <div class="category-title">🎨 Mata Pelajaran Pendukung</div>
+                        <div class="subject-list">
+                            <div class="subject-item">
+                                <div class="subject-name">Pendidikan Agama</div>
+                                <div class="subject-grade">9.4</div>
+                            </div>
+                            <div class="subject-item">
+                                <div class="subject-name">Pendidikan Kewarganegaraan</div>
+                                <div class="subject-grade">9.2</div>
+                            </div>
+                            <div class="subject-item">
+                                <div class="subject-name">Seni Budaya</div>
+                                <div class="subject-grade">9.0</div>
+                            </div>
+                            <div class="subject-item">
+                                <div class="subject-name">Pendidikan Jasmani</div>
+                                <div class="subject-grade">8.8</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="achievements-section">
+                    <div class="achievements-title">🏆 Prestasi & Penghargaan</div>
+                    <div class="achievement-grid">
+                        <div class="achievement-item">
+                            <div class="achievement-title">Juara 1 Olimpiade Matematika Tingkat Kota</div>
+                            <div class="achievement-detail">IKN, 2010 - Skor tertinggi: 95/100</div>
+                        </div>
+                        <div class="achievement-item">
+                            <div class="achievement-title">Siswa Teladan Tingkat Sekolah</div>
+                            <div class="achievement-detail">2009, 2010, 2011 - 3 tahun berturut-turut</div>
+                        </div>
+                        <div class="achievement-item">
+                            <div class="achievement-title">Juara 2 Lomba Cerdas Cermat IPA</div>
+                            <div class="achievement-detail">Tingkat Provinsi Jawa Timur, 2011</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SMP -->
+        <div id="junior" class="content-section hidden">
+            <h2 class="section-title">📖 Pendidikan Sekolah Menengah Pertama</h2>
+            
+            <div class="education-level">
+                <div class="level-header">
+                    <div class="level-title">SMP Negeri 3 IKN</div>
+                    <div class="level-years">2011 - 2014</div>
+                </div>
+
+                <div class="school-info">
+                    <div class="school-name">SMP Negeri 3 IKN</div>
+                    <div class="school-details">
+                        <strong>Alamat:</strong> Jl. Raya Gubeng No. 23, IKN<br>
+                        <strong>Akreditasi:</strong> A<br>
+                        <strong>Rata-rata Nilai UN:</strong> 8.75/10
+                    </div>
+                </div>
+
+                <div class="subjects-grid">
+                    <div class="subject-category">
+                        <div class="category-title">🔬 Mata Pelajaran Sains</div>
+                        <div class="subject-list">
+                            <div class="subject-item">
+                                <div class="subject-name">Matematika</div>
+                                <div class="subject-grade">9.2</div>
+                            </div>
+                            <div class="subject-item">
+                                <div class="subject-name">IPA Fisika</div>
+                                <div class="subject-grade">8.9</div>
+                            </div>
+                            <div class="subject-item">
+                                <div class="subject-name">IPA Biologi</div>
+                                <div class="subject-grade">9.4</div>
+                            </div>
+                            <div class="subject-item">
+                                <div class="subject-name">IPA Kimia</div>
+                                <div class="subject-grade">8.8</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="subject-category">
+                        <div class="category-title">📚 Mata Pelajaran Sosial & Bahasa</div>
+                        <div class="subject-list">
+                            <div class="subject-item">
+                                <div class="subject-name">Bahasa Indonesia</div>
+                                <div class="subject-grade">8.7</div>
+                            </div>
+                            <div class="subject-item">
+                                <div class="subject-name">Bahasa Inggris</div>
+                                <div class="subject-grade">9.1</div>
+                            </div>
+                            <div class="subject-item">
+                                <div class="subject-name">IPS</div>
+                                <div class="subject-grade">8.6</div>
+                            </div>
+                            <div class="subject-item">
+                                <div class="subject-name">TIK</div>
+                                <div class="subject-grade">9.0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="achievements-section">
+                    <div class="achievements-title">🏆 Prestasi & Penghargaan</div>
+                    <div class="achievement-grid">
+                        <div class="achievement-item">
+                            <div class="achievement-title">Juara 1 Olimpiade Sains Nasional (OSN) Biologi</div>
+                            <div class="achievement-detail">Tingkat Kabupaten/Kota, 2013 - Lolos ke tingkat Provinsi</div>
+                        </div>
+                        <div class="achievement-item">
+                            <div class="achievement-title">Ketua OSIS</div>
+                            <div class="achievement-detail">Periode 2013-2014 - Memimpin 15 program kerja</div>
+                        </div>
+                        <div class="achievement-item">
+                            <div class="achievement-title">Juara 3 Lomba Karya Tulis Ilmiah</div>
+                            <div class="achievement-detail">Tingkat Provinsi, 2014 - Tema: Kesehatan Lingkungan</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SMA -->
+        <div id="senior" class="content-section hidden">
+            <h2 class="section-title">🎓 Pendidikan Sekolah Menengah Atas</h2>
+            
+            <div class="education-level">
+                <div class="level-header">
+                    <div class="level-title">SMA Negeri 5 IKN</div>
+                    <div class="level-years">2014 - 2017</div>
+                </div>
+
+                <div class="school-info">
+                    <div class="school-name">SMA Negeri 5 IKN - Jurusan IPA</div>
+                    <div class="school-details">
+                        <strong>Alamat:</strong> Jl. Mayjen Sungkono No. 45, IKN<br>
+                        <strong>Akreditasi:</strong> A<br>
+                        <strong>Rata-rata Nilai UN:</strong> 9.25/10<br>
+                        <strong>Peringkat Kelas:</strong> 2 dari 36 siswa
+                    </div>
+                </div>
+
+                <div class="subjects-grid">
+                    <div class="subject-category">
+                        <div class="category-title">🧪 Mata Pelajaran IPA</div>
+                        <div class="subject-list">
+                            <div class="subject-item">
+                                <div class="subject-name">Matematika Wajib</div>
+                                <div class="subject-grade">9.1</div>
+                            </div>
+                            <div class="subject-item">
+                                <div class="subject-name">Matematika Peminatan</div>
+                                <div class="subject-grade">8.9</div>
+                            </div>
+                            <div class="subject-item">
+                                <div class="subject-name">Fisika</div>
+                                <div class="subject-grade">9.0</div>
+                            </div>
+                            <div class="subject-item">
+                                <div class="subject-name">Kimia</div>
+                                <div class="subject-grade">9.3</div>
+<!-- SMA -->
+        <div id="senior" class="content-section hidden">
+            <h2 class="section-title">Sertifikasi</h2>
+            
+            <div class="education-level">
+                <div class="level-header">
+                    <div class="level-title">Junior Data Scientist</div>
+                    <div class="level-years">2027</div>
+                </div>
+
+                
+                <div class="subjects-grid">
+                    <div class="subject-category">
+                        <div class="category-title">🧪 Mata Pelajaran IPA</div>
+                        <div class="subject-list">
+                            <div class="subject-item">
+                                <div class="subject-name">Matematika Wajib</div>
+                                <div class="subject-grade">9.1</div>
+                            </div>
+                            <div class="subject-item">
+                                <div class="subject-name">Matematika Peminatan</div>
+                                <div class="subject-grade">8.9</div>
+                            </div>
+                            <div class="subject-item">
+                                <div class="subject-name">Fisika</div>
+                                <div class="subject-grade">9.0</div>
+                            </div>
+                            <div class="subject-item">
+                                <div class="subject-name">Kimia</div>
+                                <div class="subject-grade">9.3</div>
+                                <script>
+
+function showTab(tabId) {
+    // Sembunyikan semua konten tab
+    const sections = document.querySelectorAll('.content-section');
+    sections.forEach(section => {
+        section.classList.add('hidden');
+    });
+
+    // Nonaktifkan semua tab
+    const tabs = document.querySelectorAll('.tab');
+    tabs.forEach(tab => {
+        tab.classList.remove('active');
+    });
+
+    // Tampilkan tab yang diklik
+    const selectedSection = document.getElementById(tabId);
+    if (selectedSection) {
+        selectedSection.classList.remove('hidden');
+    }
+
+    // Tandai tab yang aktif
+    const activeTab = Array.from(tabs).find(tab => tab.getAttribute('onclick')?.includes(tabId));
+    if (activeTab) {
+        activeTab.classList.add('active');
+    }
+}
+</script>
