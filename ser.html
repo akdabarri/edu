@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sertifikasi - Dewantara Edu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ff6b6b, #ffa500);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: #d4441c;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: #ffa500;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .brand-text h1 {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .brand-text p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .user-info {
+            text-align: right;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .page-header h2 {
+            color: #d4441c;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            color: #666;
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .filter-section {
+            background: white;
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .filter-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-item label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .filter-item select,
+        .filter-item input {
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .filter-item select:focus,
+        .filter-item input:focus {
+            outline: none;
+            border-color: #d4441c;
+        }
+
+        .search-btn {
+            background: #d4441c;
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .search-btn:hover {
+            background: #b8371a;
+            transform: translateY(-2px);
+        }
+
+        .certificates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 2rem;
+        }
+
+        .certificate-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .certificate-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #d4441c, #ffa500);
+        }
+
+        .certificate-card:hover {
+            transform: translateY(-8px);
+            border-color: #d4441c;
+            box-shadow: 0 12px 40px rgba(212, 68, 28, 0.2);
+        }
+
+        .cert-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cert-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #d4441c, #ffa500);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+
+        .cert-title {
+            flex: 1;
+        }
+
+        .cert-title h3 {
+            color: #d4441c;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .cert-title p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .cert-details {
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .detail-value {
+            color: #333;
+            text-align: right;
+        }
+
+        .cert-status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-valid {
+            background: #e8f5e8;
+            color: #2e7d32;
+        }
+
+        .status-expired {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .status-pending {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+
+        .cert-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .cert-btn {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn-download {
+            background: #d4441c;
+            color: white;
+        }
+
+        .btn-download:hover {
+            background: #b8371a;
+            transform: translateY(-2px);
+        }
+
+        .btn-verify {
+            background: #f5f5f5;
+            color: #666;
+            border: 2px solid #e0e0e0;
+        }
+
+        .btn-verify:hover {
+            background: #e0e0e0;
+            border-color: #ccc;
+        }
+
+        .domain-badges {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .domain-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .kognitif {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .afektif {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .psikomotorik {
+            background: #e8f5e8;
+            color: #2e7d32;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .certificates-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cert-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-section">
+            <div class="logo">🎓</div>
+            <div class="brand-text">
+                <h1>Dewantara Edu</h1>
+                <p>Medical Academic Recap System</p>
+            </div>
+        </div>
+        <div class="user-info">
+            <strong>Dr. Sari Medika</strong><br>
+            <small>ID: MED-2024-001</small>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="page-header">
+            <h2>📜 Manajemen e-Sertifikat & e-Transkrip</h2>
+            <p>Platform terpadu untuk pengelolaan sertifikasi digital yang terverifikasi dengan standar nasional. Setiap dokumen dilengkapi metadata terstandarisasi dan mencakup domain kognitif, afektif, dan psikomotorik.</p>
+        </div>
+
+        <div class="filter-section">
+            <div class="filter-grid">
+                <div class="filter-item">
+                    <label>Jenis Dokumen</label>
+                    <select id="docType">
+                        <option value="">Semua Dokumen</option>
+                        <option value="sertifikat">e-Sertifikat</option>
+                        <option value="transkrip">e-Transkrip</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label>Status Validitas</label>
+                    <select id="status">
+                        <option value="">Semua Status</option>
+                        <option value="valid">Valid</option>
+                        <option value="expired">Kadaluarsa</option>
+                        <option value="pending">Pending</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label>Lembaga Penerbit</label>
+                    <select id="institution">
+                        <option value="">Semua Lembaga</option>
+                        <option value="univ">Universitas</option>
+                        <option value="kemenkes">Kementerian Kesehatan</option>
+                        <option value="iai">Ikatan Apoteker Indonesia</option>
+                        <option value="perkeni">PERKENI</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label>Tahun Penerbitan</label>
+                    <input type="number" id="year" placeholder="Contoh: 2024" min="2000" max="2025">
+                </div>
+            </div>
+            <button class="search-btn" onclick="filterCertificates()">🔍 Filter Sertifikat</button>
+        </div>
+
+        <div class="certificates-grid" id="certificatesGrid">
+            <!-- Certificate cards will be generated by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        const certificates = [
+            {
+                id: 'CERT-2024-001',
+                title: 'Sertifikat Kompetesi Apoteker Klinis',
+                institution: 'Ikatan Apoteker Indonesia',
+                type: 'sertifikat',
+                issueDate: '15 Maret 2024',
+                validUntil: '15 Maret 2027',
+                status: 'valid',
+                domains: ['kognitif', 'psikomotorik'],
+                description: 'Kompetensi dalam praktik farmasi klinis dan pelayanan kefarmasian',
+                credentialId: 'IAI-KLN-2024-001234'
+            },
+            {
+                id: 'TRANS-2024-001',
+                title: 'Transkrip Akademik S2 Farmasi Klinik',
+                institution: 'Universitas Indonesia',
+                type: 'transkrip',
+                issueDate: '20 Juli 2024',
+                validUntil: 'Seumur Hidup',
+                status: 'valid',
+                domains: ['kognitif', 'afektif', 'psikomotorik'],
+                description: 'Transkrip lengkap program Magister Farmasi Klinik - IPK 3.92',
+                credentialId: 'UI-FFAR-2024-5678'
+            },
+            {
+                id: 'CERT-2024-002',
+                title: 'Sertifikat Pelatihan Diabetes Mellitus',
+                institution: 'PERKENI',
+                type: 'sertifikat',
+                issueDate: '10 Januari 2024',
+                validUntil: '10 Januari 2026',
+                status: 'valid',
+                domains: ['kognitif', 'afektif'],
+                description: 'Pelatihan manajemen komprehensif Diabetes Mellitus',
+                credentialId: 'PERKENI-DM-2024-9876'
+            },
+            {
+                id: 'CERT-2023-015',
+                title: 'Sertifikat Continuing Education',
+                institution: 'Kementerian Kesehatan',
+                type: 'sertifikat',
+                issueDate: '5 Desember 2023',
+                validUntil: '5 Desember 2024',
+                status: 'expired',
+                domains: ['kognitif'],
+                description: 'Program pendidikan berkelanjutan untuk tenaga kesehatan',
+                credentialId: 'KEMENKES-CE-2023-1111'
+            },
+            {
+                id: 'CERT-2024-003',
+                title: 'Sertifikat Farmakoekonomi',
+                institution: 'Universitas Indonesia',
+                type: 'sertifikat',
+                issueDate: '25 November 2024',
+                validUntil: 'Dalam Proses',
+                status: 'pending',
+                domains: ['kognitif', 'afektif'],
+                description: 'Sertifikat dalam proses verifikasi dan validasi',
+                credentialId: 'UI-FE-2024-PENDING'
+            }
+        ];
+
+        function renderCertificates(certs = certificates) {
+            const grid = document.getElementById('certificatesGrid');
+            
+            if (certs.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <i>📭</i>
+                        <h3>Tidak ada sertifikat yang ditemukan</h3>
+                        <p>Coba ubah filter pencarian Anda</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = certs.map(cert => `
+                <div class="certificate-card">
+                    <div class="cert-header">
+                        <div class="cert-icon">
+                            ${cert.type === 'sertifikat' ? '🏆' : '📊'}
+                        </div>
+                        <div class="cert-title">
+                            <h3>${cert.title}</h3>
+                            <p>${cert.institution}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="cert-details">
+                        <div class="detail-row">
+                            <span class="detail-label">ID Kredensial:</span>
+                            <span class="detail-value">${cert.credentialId}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Tanggal Terbit:</span>
+                            <span class="detail-value">${cert.issueDate}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Berlaku Hingga:</span>
+                            <span class="detail-value">${cert.validUntil}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Status:</span>
+                            <span class="detail-value">
+                                <span class="cert-status status-${cert.status}">
+                                    ${cert.status === 'valid' ? 'Valid' : cert.status === 'expired' ? 'Kadaluarsa' : 'Pending'}
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <p style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">${cert.description}</p>
+
+                    <div class="domain-badges">
+                        ${cert.domains.map(domain => `
+                            <span class="domain-badge ${domain}">
+                                ${domain === 'kognitif' ? '🧠 Kognitif' : 
+                                  domain === 'afektif' ? '❤️ Afektif' : 
+                                  '🤲 Psikomotorik'}
+                            </span>
+                        `).join('')}
+                    </div>
+
+                    <div class="cert-actions">
+                        <button class="cert-btn btn-download" onclick="downloadCertificate('${cert.id}')">
+                            📥 Download
+                        </button>
+                        <button class="cert-btn btn-verify" onclick="verifyCertificate('${cert.id}')">
+                            🔍 Verifikasi
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterCertificates() {
+            const docType = document.getElementById('docType').value;
+            const status = document.getElementById('status').value;
+            const institution = document.getElementById('institution').value;
+            const year = document.getElementById('year').value;
+
+            let filtered = certificates.filter(cert => {
+                let matches = true;
+                
+                if (docType && cert.type !== docType) matches = false;
+                if (status && cert.status !== status) matches = false;
+                if (institution) {
+                    const instMap = {
+                        'univ': ['Universitas'],
+                        'kemenkes': ['Kementerian Kesehatan'],
+                        'iai': ['Ikatan Apoteker'],
+                        'perkeni': ['PERKENI']
+                    };
+                    if (!instMap[institution].some(inst => cert.institution.includes(inst))) {
+                        matches = false;
+                    }
+                }
+                if (year && !cert.issueDate.includes(year)) matches = false;
+                
+                return matches;
+            });
+
+            renderCertificates(filtered);
+        }
+
+        function downloadCertificate(id) {
+            const cert = certificates.find(c => c.id === id);
+            alert(`Mengunduh ${cert.title}...\nID: ${cert.credentialId}`);
+        }
+
+        function verifyCertificate(id) {
+            const cert = certificates.find(c => c.id === id);
+            alert(`Memverifikasi ${cert.title}...\nStatus: ${cert.status === 'valid' ? 'Terverifikasi ✅' : cert.status === 'expired' ? 'Kadaluarsa ❌' : 'Dalam Proses ⏳'}`);
+        }
+
+        // Initialize page
+        renderCertificates();
+    </script>
+</body>
+</html>
